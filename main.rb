@@ -1,36 +1,17 @@
 require './brave'
 require './monster'
+require './games_controller'
 
-brave = Brave.new(name: "テリー", hp: 1000, offense: 50, defense: 20)
-monster = Monster.new(name: "スライム", hp: 100, offense: 50, defense: 20)
+games_controller = GamesController.new
 
-puts <<~TEXT
-NAME:#{brave.name}
-HP:#{brave.hp}
-OFFENSE:#{brave.offense}
-DEFENSE:#{brave.defense}\n
-TEXT
+terry = Brave.new(name: "テリー", hp: 1000, offense: 50, defense: 20)
+slime = Monster.new(name: "スライム", hp: 100, offense: 50, defense: 20)
 
-loop do
-  brave.attach(monster)
-  break if monster.hp <= 0
-  monster.attack(brave)
-  break if brave.hp <= 0
-end
+games_controller.battle(brave: terry, monster: slime)
 
-battle_result = brave.hp > 0
-
-if battle_result
-  exp = (monster.offense + monster.defense) * 2
-  gold = (monster.offense + monster.defense) * 3
-  puts <<~TEXT
-  #{monster.name}を倒した
-  #{brave.name}は戦いに勝った
-  #{exp}の経験値と#{gold}ゴールドを獲得した
-  TEXT
-else
-  puts <<~TEXT
-  #{brave.name}は戦いに負けた
-  目の前が真っ暗になった
-  TEXT
-end
+# puts <<~TEXT
+# NAME:#{brave.name}
+# HP:#{brave.hp}
+# OFFENSE:#{brave.offense}
+# DEFENSE:#{brave.defense}\n
+# TEXT
